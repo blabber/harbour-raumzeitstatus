@@ -18,6 +18,6 @@ ApplicationWindow
 	}
 
 	Controller {
-		id: python
+		id: controller
 	}
 }

@@ -6,7 +6,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import io.thp.pyotherside 1.4
 import "pages"
 
 ApplicationWindow
@@ -18,33 +17,7 @@ ApplicationWindow
 		id: model
 	}
 
-	Python {
+	Controller {
 		id: python
-
-		Component.onCompleted: {
-			addImportPath(Qt.resolvedUrl('../python'));
-
-			setHandler('finished', function(newvalue) {
-				model.refreshing = false;
-				model.door = newvalue;
-			});
-
-			importModule('controller', function () {
-				startDownload();
-			});
-		}
-
-		function startDownload() {
-			model.refreshing = true;
-			call('controller.instance.refresh', function() {});
-		}
-
-		onError: {
-			console.log('python error: ' + traceback);
-		}
-
-		onReceived: {
-			console.log('got message from python: ' + data);
-		}
 	}
 }

@@ -17,7 +17,7 @@ Page {
 		PullDownMenu {
 			MenuItem {
 				text: "Aktualisieren"
-				onClicked: python.startDownload()
+				onClicked: python.startRefresh()
 			}
 
 			busy: model.refreshing

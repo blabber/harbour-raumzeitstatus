@@ -40,7 +40,7 @@ CoverBackground {
 
 		CoverAction {
 			iconSource: "image://theme/icon-cover-refresh"
-			onTriggered: python.startDownload()
+			onTriggered: python.startRefresh()
 		}
 	}
 }

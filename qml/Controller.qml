@@ -13,17 +13,17 @@ Python {
 	Component.onCompleted: {
 		addImportPath(Qt.resolvedUrl('../python'));
 
-		setHandler('finished', function(newvalue) {
+		setHandler('refreshFinished', function(newvalue) {
 			model.refreshing = false;
 			model.door = newvalue;
 		});
 
 		importModule('controller', function () {
-			startDownload();
+			startRefresh();
 		});
 	}
 
-	function startDownload() {
+	function startRefresh() {
 		model.refreshing = true;
 		call('controller.instance.refresh', function() {});
 	}

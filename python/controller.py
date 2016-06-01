@@ -39,7 +39,7 @@ class Controller:
         except urllib.error.HTTPError as err:
             print('Error: {0}: {1}'.format(err.code, err.reason))
 
-        pyotherside.send('finished', s) 
+        pyotherside.send('refreshFinished', s)
 
 instance = Controller()
 

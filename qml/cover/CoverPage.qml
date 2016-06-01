@@ -11,8 +11,6 @@ import "../components"
 CoverBackground {
 	id: coverpage
 
-	property bool refreshing: false
-
 	StatusIndicator {
 		id: statusIndicator
 

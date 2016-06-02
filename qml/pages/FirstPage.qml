@@ -16,6 +16,11 @@ Page {
 
 		PullDownMenu {
 			MenuItem {
+				text: "Einstellungen"
+				onClicked: pageStack.push("SettingsPage.qml")
+			}
+
+			MenuItem {
 				text: "Aktualisieren"
 				onClicked: controller.startRefresh()
 			}

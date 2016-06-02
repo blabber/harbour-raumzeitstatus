@@ -11,4 +11,5 @@ Item {
 
 	property bool refreshing: false
 	property string door: "?"
+	property int refreshInterval: 0
 }

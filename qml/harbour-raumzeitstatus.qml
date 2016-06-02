@@ -20,4 +20,11 @@ ApplicationWindow
 	Controller {
 		id: controller
 	}
+
+	Timer {
+		interval: model.refreshInterval * 60 * 1000
+		onTriggered: controller.startRefresh();
+		repeat: true
+		running: model.refreshInterval > 0
+	}
 }

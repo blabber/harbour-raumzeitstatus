@@ -12,6 +12,7 @@ Python {
 		addImportPath(Qt.resolvedUrl('../python'));
 
 		setHandler('refreshFinished', function(newvalue) {
+			model.lastRefresh = new Date().getTime()
 			model.refreshing = false;
 			model.door = newvalue;
 		});

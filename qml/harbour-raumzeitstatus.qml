@@ -7,24 +7,35 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "pages"
+import "cover"
 
 ApplicationWindow
 {
 	initialPage: Component { FirstPage { } }
-	cover: Qt.resolvedUrl("cover/CoverPage.qml")
+	cover: CoverPage { id: coverPage }
 
-	Model {
-		id: model
-	}
-
-	Controller {
-		id: controller
-	}
+	Model { id: model }
+	Controller { id: controller }
 
 	Timer {
-		interval: model.refreshInterval * 60 * 1000
-		onTriggered: controller.startRefresh();
+		property double refreshInterval: model.refreshInterval * 60 * 1000
+
+		interval: 5 * 60 * 1000
 		repeat: true
-		running: model.refreshInterval > 0
+		triggeredOnStart: true
+
+		onTriggered: {
+			var now = new Date().getTime();
+			if ((now - model.lastRefresh) < refreshInterval) {
+				return;
+			}
+			controller.startRefresh();
+		}
+
+		running: {
+			return model.refreshInterval > 0 &&
+				(Qt.application.state == Qt.ApplicationActive ||
+				coverPage.status == Cover.Active);
+		}
 	}
 }

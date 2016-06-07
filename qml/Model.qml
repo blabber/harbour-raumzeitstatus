@@ -8,6 +8,8 @@ import QtQuick 2.0
 
 Item {
 	property bool refreshing: false
-	property string door: "?"
 	property int refreshInterval: 0
+	property double lastRefresh: 0
+
+	property string door: "?"
 }

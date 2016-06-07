@@ -9,8 +9,6 @@ import Sailfish.Silica 1.0
 import "../components"
 
 CoverBackground {
-	id: coverpage
-
 	StatusIndicator {
 		id: statusIndicator
 
@@ -36,8 +34,6 @@ CoverBackground {
 	}
 
 	CoverActionList {
-		id: coverAction
-
 		CoverAction {
 			iconSource: "image://theme/icon-cover-refresh"
 			onTriggered: controller.startRefresh()

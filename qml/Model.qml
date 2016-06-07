@@ -7,8 +7,6 @@
 import QtQuick 2.0
 
 Item {
-	id: model
-
 	property bool refreshing: false
 	property string door: "?"
 	property int refreshInterval: 0

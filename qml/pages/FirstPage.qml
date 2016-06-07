@@ -9,8 +9,6 @@ import Sailfish.Silica 1.0
 import "../components"
 
 Page {
-	id: firstPage
-
 	SilicaFlickable {
 		anchors.fill: parent
 

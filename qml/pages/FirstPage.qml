@@ -36,5 +36,18 @@ Page {
 				topMargin: Theme.paddingLarge
 			}
 		}
+
+		Label {
+			anchors {
+				bottom: parent.bottom
+				bottomMargin: Theme.paddingLarge
+				right: parent.right
+				rightMargin: Theme.horizontalPageMargin
+			}
+
+			text: new Date(model.lastRefresh).toString()
+			color: Theme.secondaryHighlightColor
+			font.pixelSize: Theme.fontSizeExtraSmall
+		}
 	}
 }

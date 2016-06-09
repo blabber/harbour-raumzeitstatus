@@ -10,7 +10,12 @@ import Sailfish.Silica 1.0
 Dialog {
 	id: settingsDialog
 
-	property int refreshInterval: 0
+	readonly property var intervalItems: [
+			{ "label" : "manuell", "value" : 0 },
+			{ "label" : "15 min",  "value" : 15 },
+			{ "label" : "30 min",  "value" : 30 },
+			{ "label" : "1 h",     "value" : 60 }
+		]
 
 	DialogHeader {
 		id: header
@@ -18,29 +23,17 @@ Dialog {
 	}
 
 	onOpened: {
-		refreshInterval = model.refreshInterval;
-
-		switch (refreshInterval) {
-			case 0:
-				refreshIntervalCombo.currentIndex = 0;
-				break;
-			case 15:
-				refreshIntervalCombo.currentIndex = 1;
-				break;
-			case 30:
-				refreshIntervalCombo.currentIndex = 2;
-				break;
-			case 60:
-				refreshIntervalCombo.currentIndex = 3;
-				break;
-			default:
-				console.log("Invalid refreshInterval:", refreshInterval);
-				refreshInterval = 0;
-		}
+		intervalItems.forEach(function(element, index){
+			if(element["value"] == model.refreshInterval){
+				refreshIntervalCombo.currentIndex = index;
+				return;
+			}
+		});
 	}
 
 	onAccepted: {
-		model.refreshInterval = refreshInterval
+		model.refreshInterval =
+			intervalItems[refreshIntervalCombo.currentIndex]["value"];
 	}
 
 	ComboBox {
@@ -53,22 +46,10 @@ Dialog {
 		}
 
 		menu: ContextMenu {
-			MenuItem {
-				text: "manuell"
-				onClicked: settingsDialog.refreshInterval = 0;
-			}
-			MenuItem {
-				text: "15 min"
-				onClicked: settingsDialog.refreshInterval = 15;
-			}
-			MenuItem {
-				text: "30 min"
-				onClicked: settingsDialog.refreshInterval = 30;
-			}
-			MenuItem {
-				text: "1 h"
-				onClicked: settingsDialog.refreshInterval = 60;
-			}
+			MenuItem { text: intervalItems[0]["label"] }
+			MenuItem { text: intervalItems[1]["label"] }
+			MenuItem { text: intervalItems[2]["label"] }
+			MenuItem { text: intervalItems[3]["label"] }
 		}
 	}
 }

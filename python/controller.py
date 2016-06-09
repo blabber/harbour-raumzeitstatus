@@ -32,7 +32,7 @@ class Controller:
         url = 'https://status.raumzeitlabor.de/api/simple.json'
 
         try:
-            with urllib.request.urlopen(url=url, context=ctx) as f:
+            with urllib.request.urlopen(url=url, timeout=10, context=ctx) as f:
                 s = f.read(1)
         except urllib.error.URLError as err:
             print('Error: {0}'.format(err.reason))

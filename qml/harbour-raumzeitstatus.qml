@@ -32,10 +32,8 @@ ApplicationWindow
 			controller.startRefresh();
 		}
 
-		running: {
-			return model.refreshInterval > 0 &&
-				(Qt.application.state == Qt.ApplicationActive ||
-				coverPage.status == Cover.Active);
-		}
+		running: model.refreshInterval > 0 &&
+							(Qt.application.state == Qt.ApplicationActive ||
+							coverPage.status == Cover.Active)
 	}
 }

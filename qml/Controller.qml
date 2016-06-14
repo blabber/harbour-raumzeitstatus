@@ -11,10 +11,15 @@ Python {
 	Component.onCompleted: {
 		addImportPath(Qt.resolvedUrl('../python'));
 
-		setHandler('refreshFinished', function(newvalue) {
+		setHandler('statusRefreshed', function(newvalue) {
 			model.lastRefresh = new Date().getTime();
 			model.refreshing = false;
 			model.door = newvalue;
+		});
+
+		setHandler('configLoaded', function(newvalue) {
+			var config = newvalue['configuration'];
+			model.refreshInterval = config['refresh_interval'];
 		});
 
 		importModule('controller', function () {
@@ -25,6 +30,15 @@ Python {
 	function startRefresh() {
 		model.refreshing = true;
 		call('controller.instance.refresh', function() {});
+	}
+
+	function saveConfig() {
+		var config = {
+			'configuration' : {
+				'refresh_interval' : model.refreshInterval
+			}
+		};
+		call('controller.instance.save_config', [config],  function() {});
 	}
 
 	onError: {

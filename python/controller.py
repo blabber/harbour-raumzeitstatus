@@ -8,6 +8,9 @@ import pyotherside
 import threading
 import urllib.request
 import urllib.error
+import os
+import os.path
+import json
 import ssl
 
 class Controller:
@@ -15,14 +18,29 @@ class Controller:
         self.bgthread = threading.Thread()
         self.bgthread.start()
 
-    def refresh(self):
-        if self.bgthread.is_alive():
+        home = os.path.expanduser('~')
+
+        xdg_config_home = os.environ.get('XDG_CONFIG_HOME', os.path.join(home, '.config'))
+        self.config_file = os.path.join(xdg_config_home, "harbour-raumzeitstatus", "config.json")
+        self.config_loaded = False
+
+    def load_config(self):
+        if not os.path.exists(os.path.dirname(self.config_file)):
             return
 
-        self.bgthread = threading.Thread(target=self.__refresh_in_background)
-        self.bgthread.start()
+        with open(self.config_file, 'r') as f:
+            c = json.load(f)
 
-    def __refresh_in_background(self):
+        if c:
+            pyotherside.send('configLoaded', c)
+
+    def save_config(self, config):
+        os.makedirs(os.path.dirname(self.config_file), exist_ok=True)
+
+        with open(self.config_file, 'w') as f:
+            json.dump(config, f, indent=2)
+
+    def get_status_from_backend(self):
         # FIXME: Disabled SSL verification for now
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
@@ -39,7 +57,20 @@ class Controller:
         except urllib.error.HTTPError as err:
             print('Error: {0}: {1}'.format(err.code, err.reason))
 
-        pyotherside.send('refreshFinished', s)
+        pyotherside.send('statusRefreshed', s)
+
+    def refresh(self):
+        if self.bgthread.is_alive():
+            return
+
+        self.bgthread = threading.Thread(target=self.__refresh_in_background)
+        self.bgthread.start()
+
+    def __refresh_in_background(self):
+        self.get_status_from_backend()
+        if not self.config_loaded:
+            self.load_config()
+            self.config_loaded = True
 
 instance = Controller()
 

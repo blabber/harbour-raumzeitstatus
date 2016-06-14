@@ -34,6 +34,7 @@ Dialog {
 	onAccepted: {
 		model.refreshInterval =
 			intervalItems[refreshIntervalCombo.currentIndex]["value"];
+		controller.saveConfig();
 	}
 
 	ComboBox {

@@ -41,7 +41,11 @@ class Controller:
             json.dump(config, f, indent=2)
 
     def get_status_from_backend(self):
-        # FIXME: Disabled SSL verification for now
+        # Certificate verficiation fails on Sailfish OS 2.0.1.11. After several
+        # tests with openssl s_client and curl it seems as if some certificate
+        # in the chain is missing in the system set of trusted certificates.
+        # Disable certificate verification. As this app only displays status
+        # information MITM can be ignored.
         ctx = ssl.create_default_context()
         ctx.check_hostname = False
         ctx.verify_mode = ssl.CERT_NONE

@@ -25,7 +25,7 @@ class Controller:
         self.config_loaded = False
 
     def load_config(self):
-        if not os.path.exists(os.path.dirname(self.config_file)):
+        if not os.path.exists(self.config_file):
             return
 
         with open(self.config_file, 'r') as f:

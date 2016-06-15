@@ -19,8 +19,9 @@ Page {
 			}
 
 			MenuItem {
-				text: "Aktualisieren"
+				text: !model.refreshing ? "Aktualisieren" : "Aktualisiere..."
 				onClicked: controller.startRefresh()
+				enabled: !model.refreshing
 			}
 
 			busy: model.refreshing
